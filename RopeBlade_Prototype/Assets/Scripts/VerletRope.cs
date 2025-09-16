@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class VerletRope3D : MonoBehaviour
+public class VerletRope : MonoBehaviour
 {
     [Header("Rope Settings")]
     public Transform startPoint;     // Anchor (fixed)
@@ -40,6 +41,7 @@ public class VerletRope3D : MonoBehaviour
         SimulateRope();
         DrawRope();
         DetectCollisions();
+        Debug.Log(GetEndDirection());
     }
 
     private void SimulateRope()
@@ -142,6 +144,30 @@ public class VerletRope3D : MonoBehaviour
                 Debug.DrawLine(start, end, Color.green); // visualize no hit
             }
         }
+    }
+
+    public Vector3 GetEndDirection(int smoothSegments = 1)
+    {
+        if (ropeSegments.Count < 2)
+            return Vector3.forward;
+
+        // Clamp smoothing to available segments
+        smoothSegments = Mathf.Clamp(smoothSegments, 1, ropeSegments.Count - 1);
+
+        Vector3 accum = Vector3.zero;
+        int lastIndex = ropeSegments.Count - 1;
+
+        for (int i = 0; i < smoothSegments; i++)
+        {
+            Vector3 a = ropeSegments[lastIndex - i - 1].posNow;
+            Vector3 b = ropeSegments[lastIndex - i].posNow;
+
+            Vector3 segment = b - a;
+            if (segment.sqrMagnitude > Mathf.Epsilon)
+                accum += segment.normalized;
+        }
+
+        return accum.sqrMagnitude > Mathf.Epsilon ? accum.normalized : Vector3.forward;
     }
 
 }
