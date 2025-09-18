@@ -5,12 +5,13 @@ public class KnifeController : MonoBehaviour
     public Transform target;          // Point to orbit around
     public Transform spinStart;
     public Vector3 localAnchor;       // Local offset (anchor) on this object
-    public float orbitSpeed = 50f;    // Degrees per second
+    public float orbitSpeedMax = 50f;   // Degrees per second
+    public float orbitSpeedMin;
     public Vector3 axis = Vector3.up; // Orbit axis
 
     private Rigidbody rb;
 
-    public VerletRope rope;
+    //public VerletRope rope;
 
     public bool isSpinning = false;
     public Transform spinStartLocation;
@@ -20,6 +21,11 @@ public class KnifeController : MonoBehaviour
     public float whipForce;
 
     public Animator anim;
+
+    public VerletRope2 rope;
+    public float spinLength;
+    public float maxLength;
+    public float minLength;
 
 
     void Start()
@@ -92,7 +98,7 @@ public class KnifeController : MonoBehaviour
         Vector3 dir = worldAnchor - target.position;
 
         // Rotate that vector
-        Quaternion rotation = Quaternion.AngleAxis(orbitSpeed * Time.fixedDeltaTime, axis);
+        Quaternion rotation = Quaternion.AngleAxis(orbitSpeedMax * Time.fixedDeltaTime, axis);
         Vector3 newDir = rotation * dir;
 
         // New world position of anchor
