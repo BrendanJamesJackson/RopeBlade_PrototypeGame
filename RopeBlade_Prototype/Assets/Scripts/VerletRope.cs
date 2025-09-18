@@ -41,7 +41,7 @@ public class VerletRope : MonoBehaviour
         SimulateRope();
         DrawRope();
         DetectCollisions();
-        Debug.Log(GetEndDirection());
+        //Debug.Log(GetEndDirection());
     }
 
     private void SimulateRope()
@@ -136,7 +136,7 @@ public class VerletRope : MonoBehaviour
 
             if (Physics.Linecast(start, end, out RaycastHit hit))
             {
-                Debug.Log($"Rope segment {i} hit {hit.collider.name}");
+                //Debug.Log($"Rope segment {i} hit {hit.collider.name}");
                 Debug.DrawLine(start, end, Color.red); // visualize collision
             }
             else

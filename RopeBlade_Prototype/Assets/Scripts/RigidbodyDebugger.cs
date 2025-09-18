@@ -13,6 +13,6 @@ public class RigidbodyDebugger : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log("Velocity: " + rb.linearVelocity + " Position: " + transform.position);
+        //Debug.Log("Velocity: " + rb.linearVelocity + " Position: " + transform.position);
     }
 }
