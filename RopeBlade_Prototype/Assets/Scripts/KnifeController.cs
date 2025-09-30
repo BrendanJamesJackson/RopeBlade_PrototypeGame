@@ -26,7 +26,7 @@ public class KnifeController : MonoBehaviour
     public float spinLength;
     public float maxLength;
     public float minLength;
-
+    private Vector3 initialOffset;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class KnifeController : MonoBehaviour
     {
         
 
-        Vector3 ropeDir = rope.GetEndDirection();
+        /*Vector3 ropeDir = rope.GetEndDirection();
         if (ropeDir.sqrMagnitude > 0.0001f)
         {
             // Fixed up axis in world space (prevents roll)
@@ -56,7 +56,7 @@ public class KnifeController : MonoBehaviour
             rb.MoveRotation(targetRot);
 
 
-        }
+        }*/
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -68,59 +68,58 @@ public class KnifeController : MonoBehaviour
             WhipForward();
         }
 
-    }
-
-    void FixedUpdate()
-    {
         if (target == null) return;
 
         if (isSpinning)
         {
             Spin(); 
         }
-
-        if (isWhipping)
+        else if (isWhipping)
         {
             Vector3 target = whipEndPosition.position;
-            float step = whipForce * Time.fixedDeltaTime;
+            float step = whipForce * Time.deltaTime;
             Vector3 newPos = Vector3.MoveTowards(rb.position, target, step);
             rb.MovePosition(newPos);
         }
+
+
+    }
+
+    void FixedUpdate()
+    {
+        
             
     }
 
     public void Spin()
     {
-        // World position of the anchor on this object
-        Vector3 worldAnchor = transform.TransformPoint(localAnchor);
+        // Rotate the *original offset*, not a recalculated one
+        Quaternion rotation = Quaternion.AngleAxis(orbitSpeedMax * Time.deltaTime, axis);
+        initialOffset = rotation * initialOffset;
 
-        // Vector from target to anchor
-        Vector3 dir = worldAnchor - target.position;
+        // New anchor position
+        Vector3 newAnchorPos = target.position + initialOffset;
 
-        // Rotate that vector
-        Quaternion rotation = Quaternion.AngleAxis(orbitSpeedMax * Time.fixedDeltaTime, axis);
-        Vector3 newDir = rotation * dir;
 
-        // New world position of anchor
-        Vector3 newAnchorPos = target.position + newDir;
+        // How much to move
+        Vector3 delta = newAnchorPos - transform.TransformPoint(localAnchor);
 
-        // How much the anchor needs to move
-        Vector3 delta = newAnchorPos - worldAnchor;
-
-        // Move Rigidbody by the same delta so anchor stays in orbit
         rb.MovePosition(rb.position + delta);
     }
     public void StartSpinning()
-    {
+    {   
+        isSpinning = true;
         isWhipping = false;
+        //rb.linearVelocity = Vector3.zero;
+        //rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        
 
         this.transform.position = spinStart.position;
         this.transform.rotation = spinStart.rotation;
-        isSpinning = true;
-        anim.SetTrigger("Spin");
+        Vector3 worldAnchor = transform.TransformPoint(localAnchor);
+        initialOffset = worldAnchor - target.position;
+        //anim.SetTrigger("Spin");
     }
 
     public void StopSpinning()
@@ -132,7 +131,7 @@ public class KnifeController : MonoBehaviour
     {
         StopSpinning();
         isWhipping = true;
-        anim.SetTrigger("Release");
+        //anim.SetTrigger("Release");
         /*transform.position = spinStart.position;
 
         Vector3 direction = (whipEndPosition.position - transform.position).normalized;

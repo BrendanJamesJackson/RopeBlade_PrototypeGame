@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 626453788}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000022351739, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.6139982, y: 0.54499984, z: 0.9500116}
+  m_LocalPosition: {x: 0.6139982, y: 0.54499984, z: 2.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1318,6 +1318,8 @@ GameObject:
   - component: {fileID: 1137909216}
   - component: {fileID: 1137909217}
   - component: {fileID: 1137909218}
+  - component: {fileID: 1137909220}
+  - component: {fileID: 1137909219}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1400,6 +1402,53 @@ MonoBehaviour:
   playerCamera: {fileID: 999164640}
   mouseSensitivity: 100
   lockCursor: 1
+--- !u!114 &1137909219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137909215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7b83fb68509e3499096eb7d8a6ca14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: 1137909220}
+--- !u!114 &1137909220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137909215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: cf493ab2bac9bcf439b2ec7bdfc75785, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 67dd78f6-0abd-4e67-be20-6231c9bf5291
+    m_ActionName: 'Default/Spin[/XInputControllerWindows/rightTrigger]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Default
+  m_DefaultActionMap: Default
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1311767198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,8 +1870,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbA: {fileID: 1622717544}
   rbB: {fileID: 626453790}
-  segmentCount: 20
-  ropeLength: 1
+  segmentCount: 10
+  ropeLength: 8
   constraintIterations: 50
   damping: 0.99
 --- !u!120 &1775636193

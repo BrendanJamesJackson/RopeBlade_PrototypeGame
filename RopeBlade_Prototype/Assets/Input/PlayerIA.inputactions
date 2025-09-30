@@ -1,0 +1,46 @@
+{
+    "name": "PlayerIA",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "b99f5b20-e569-49f8-835b-804ff11963ab",
+            "actions": [
+                {
+                    "name": "Spin",
+                    "type": "Value",
+                    "id": "67dd78f6-0abd-4e67-be20-6231c9bf5291",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b9204881-ad38-44a7-ac55-5c753fb45a59",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Default",
+                    "action": "Spin",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
